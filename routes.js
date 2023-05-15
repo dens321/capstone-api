@@ -1,10 +1,15 @@
+const {getAllUsersHandler, addUserHandler} = require("./handler");
+
 const routes = [
     {
         method: 'GET',
         path: '/',
-        handler: (request, h) => {
-            return 'Homepage';
-        },
+        handler: getAllUsersHandler
+    },
+    {
+        method: 'POST',
+        path: '/',
+        handler: addUserHandler
     }
 ]
 
