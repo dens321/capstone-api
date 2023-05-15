@@ -1,5 +1,5 @@
 const users = require('./users');
-// const { nanoid } = import("nanoid");
+const db = require("./db_connection.js");
 
 const addUserHandler = (request, h) => {
     const { username, password } = request.payload;
@@ -9,8 +9,6 @@ const addUserHandler = (request, h) => {
     users.push(newUser);
 
     const isSuccess = users.filter((user) => user.username === username).length > 0;
-
-
 
     if(isSuccess) {
         const response = h.response({
@@ -32,11 +30,14 @@ const addUserHandler = (request, h) => {
     return response;
 }
 
-const getAllUsersHandler = () => ({
-    status: 'success',
-    data: {
-        users,
-    },
-});
+const getAllUsersHandler = async (req, h) => {
+    const users = await db.getUsers();
+    const response = h.response({
+        status: 'success',
+        data: users
+    });
+    response.code(200);
+    return response;
+};
 
 module.exports = {addUserHandler, getAllUsersHandler};
