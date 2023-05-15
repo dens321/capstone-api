@@ -6,7 +6,12 @@ const init = async() => {
     const server = Hapi.server({
         port: 8080,
         host: 'localhost',
-    });
+        routes: {
+            cors: {
+                origin: ['*'],
+            },
+        },
+    })
 
     // routing configuration
     server.route(routes);
